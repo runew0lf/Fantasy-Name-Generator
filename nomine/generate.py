@@ -3,6 +3,7 @@ from pykov import Vector
 import random
 
 from pprint import PrettyPrinter
+
 pp = PrettyPrinter(indent=4)
 echo = pp.pprint
 
@@ -10,20 +11,22 @@ echo = pp.pprint
 class NomineException(Exception):
     pass
 
+
 def split_letters(line, n=1):
-    return [line[i:i+n] for i in range(0, len(line), n)]
+    return [line[i: i + n] for i in range(0, len(line), n)]
+
 
 class Nomine:
     def __init__(self, corpus=None, source=None, preset=None, splitter=None):
         if type(source) is str:
             with open(source) as f:
                 content = f.readlines()
-                content = [f.replace('\n', '') for f in content]
+                content = [f.replace("\n", "") for f in content]
                 self.corpus = content
         if type(preset) is str:
             with open("./nomine/names/{}.txt".format(preset), encoding="utf8") as f:
                 content = f.readlines()
-                content = [f.replace('\n', '') for f in content]
+                content = [f.replace("\n", "") for f in content]
                 self.corpus = content
         elif type(corpus) is list:
             self.corpus = corpus
@@ -61,7 +64,6 @@ class Nomine:
                 prob[letter2] = count / sum_keys
             self.vectors[letter1] = Vector(prob)
 
-
     def _generate(self, size=None):
         "Generates a new word"
         corpus_letters = list(self.vectors.keys())
@@ -79,7 +81,7 @@ class Nomine:
             letters.append(found_letter)
             current_letter = found_letter
 
-        return ''.join(letters)
+        return "".join(letters)
 
     def get(self, length=None):
         while True:
